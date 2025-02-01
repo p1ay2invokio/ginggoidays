@@ -30,6 +30,15 @@ export default function Home() {
     show: { opacity: 1, y: 0, pointerEvents: "auto" },
   };
 
+  const [load, setLoad] = useState(false)
+
+  useEffect(() => {
+    setLoad(true)
+    setTimeout(() => {
+      setLoad(false)
+    }, 9000);
+  }, [current == cats.length - 1])
+
 
   return (
     <div>
@@ -62,6 +71,11 @@ export default function Home() {
       </motion.div> */}
 
       </div> : <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2 }}>
+
+        <motion.div initial={{ y: 0, opacity: 1 }} animate={!load ? { y: -500, opacity: 0, pointerEvents: 'none' } : { y: 0, opacity: 1 }} className="w-full h-[100vh] fixed top-0 left-0 bg-black/60 z-[6] flex justify-center items-center">
+          <p className="font-[medium] text-white">Loading</p>
+        </motion.div>
+
         <div className="w-full h-[110px] bg-[#eaa9a9] flex flex-col justify-center items-center">
           <p className="font-[sbold] text-[24px] text-white">Happy Birthday</p>
           <p className="font-[sbold] text-[24px] text-white">to</p>
@@ -78,7 +92,7 @@ export default function Home() {
 
 
           {openCat ? <div className="absolute z-[6] top-0">
-            <motion.img initial={{y: -100}} animate={{y: 0}} onClick={() => {
+            <motion.img initial={{ y: -100 }} animate={{ y: 0 }} onClick={() => {
               setOpenCat(false)
             }} src="./dog.webp"></motion.img>
           </div> : null}
